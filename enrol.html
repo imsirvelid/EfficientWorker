@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <style>
+         body {
+            background-color: darkgreen;
+            font-weight:bolder;
+            color: antiquewhite;            
+         }
+
+         p {
+            text-align: center;
+            font-size: 50px;
+         }
+         
+      </style>
+      <title>Upisivanje putnika</title>
+      <script type = "text/javascript">
+         var log_info = [];
+         var mojURL = "ws://" + window.location.host + "/ws";
+         var ws = new WebSocket(mojURL);
+         var received = 0, counter = 0;
+         var msg ="";         
+         ws.onmessage = function(evt) {
+          msg = evt.data;
+          if (evt.data == "redirect") window.location ="/forms";   
+
+          if (evt.data == ".")
+               document.getElementById("text").innerHTML += ".";                 
+          else              
+               document.getElementById("text").innerHTML = msg;         
+        };
+      </script>
+   </head>
+
+   <body>
+      <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+      <p id="text">Postavi prst na senzor...........</p>
+   </body>
+</html>

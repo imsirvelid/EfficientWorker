@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Efficient Worker:Starting page</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color:darkkhaki;                                    
+        }
+
+        h2 {
+            text-align: center; 
+            color: white;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        input[type=password], input[type=text], input[type=number], select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+        }
+
+        label {
+            padding: 12px 12px 12px 0;
+            display: inline-block;    
+        }
+
+        input[type=submit] {            
+            clear: both;            
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            float: right;
+        }
+        
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+        
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .container1 {
+            margin-left: 5%;
+            margin-right: 5%;
+            width: 90%;
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            padding: 20px;
+            display: inline-block;
+        }
+
+        .prvaKolona {
+            float: left;
+            width: 25%;
+            margin-top: 2px;
+            margin-bottom: 5px;
+        }
+
+        .drugaKolona {
+            float: left;
+            width: 75%;
+            margin-top: 6px;
+            margin-bottom: 6px;
+        }
+
+        @media screen and (max-width: 640px) {
+            .prvaKolona, .drugaKolona, input[type=submit] {
+                width: 100%;
+                margin-top: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h2>Query the most efficient workers before last reset of time:</h2>
+    <div class="container1">
+        <form action="/vratiEfikasne" id="trecaForma">
+            <div class="red">
+                <div class="prvaKolona">
+                    <label for="abc">Maximum hours per task:</label>
+                </div>
+    
+                <div class="drugaKolona">
+    
+                    <input type="text" id="abc" name="efikasnost" placeholder="Hours per task">
+                </div>
+            </div>
+    
+            <div class="red">
+                <input type="submit" value="Query database">                
+            </div>                
+        </form><br>
+    </div>
+
+
+    <h2>Enrol Worker into the system:</h2><br>
+    <div class="container1">
+        <form method="POST" action="/addFinger">
+            <div class="red">
+                <div class="prvaKolona">
+                    <label for="ka">Last name:</label>
+                </div>
+                <div class="drugaKolona">
+                    <input type="text" id="ka" placeholder="Last name" name="prezimeRadnika" value="">
+                </div>                
+            </div>            
+            <div class="red">
+                <div class="prvaKolona">                    
+                    <label for="aaa">First name:</label>
+                </div>
+                <div class="drugaKolona">
+                    <input type="text" id="aaa" placeholder="First name" name="imeRadnika" value="">
+                </div>
+
+            </div>
+            <div class="red">
+                <input type="submit" class="button" value="Next">
+            </div>
+        </form>
+    </div>
+    <h2>Query worker's tasks:</h2><br>
+    <div class="container1">
+        <form action="/upitBaziPodataka" id="prvaForma">
+            <div class="red">
+                <div class="prvaKolona">
+                    <label for="a">Worker ID:</label>
+                </div>
+                <div class="drugaKolona">
+                    <input type="number" id="a" name="ID" placeholder="ID">
+                </div>                
+            </div>
+            
+            <div class="red">
+                <div class="prvaKolona">
+                    <label for="b">Last name:</label>
+                </div>
+                <div class="drugaKolona">
+                    <input type="text" id="b" name="prezime" placeholder="Last name">
+                </div>                
+            </div>
+
+            <div class="red">
+                <div class="prvaKolona">
+                    <label for="c">First name:</label>
+                </div>
+                <div class="drugaKolona">
+                    <input type="text" id="c" name="ime" placeholder="First name">
+                </div>                
+            </div>
+            
+            <div class="red">
+                <div class="prvaKolona">
+                    <label for="d">Day:</label>
+                </div>
+                <div class="drugaKolona">
+                    <input type="number" id="d" name="dan" placeholder="Day">
+                </div>                
+            </div>    
+            
+            <div class="red">
+                <div class="prvaKolona">
+                    <label for="e">Month:</label>
+                </div>
+                <div class="drugaKolona">
+                    <input type="text" id="e" name="mjesec" placeholder="Month">
+                </div>                
+            </div>    
+            
+            <div class="red">
+                <div class="prvaKolona">
+                    <label for="k">Year:</label>
+                </div>
+                <div class="drugaKolona">
+                    <input type="number" id="k" name="godina" placeholder="Year">
+                </div>                
+            </div>                                        
+
+            <div class="red">
+                <input type="submit" value="Query database">
+            </div>            
+        </form>
+    </div>
+    <br><br>
+
+    <h2>Admission for resetting task records:</h2><br>
+
+    <div class="container1">
+        <form action="/zahtjevZaResetiranje" id="drugaForma">
+            <div class="red">
+                <div class="prvaKolona">
+                    <label for="kk"> Password:</label>
+                </div>
+    
+                <div class="drugaKolona">
+    
+                    <input type="password" id="kk" name="sifra" placeholder="Password">
+                </div>
+            </div>
+    
+            <div class="red">
+                <input type="submit" value="Submit">                
+            </div>                
+        </form><br>
+    </div>
+    
+
+    <h2>Query enrolled workers:</h2><br>
+    <div class="container1">
+        <form action="/upitZaKorisnike" id="trecaFroma">
+            <div class="red">
+                <div class="prvaKolona">
+                    <label for="ab">Worker ID:</label>
+                </div>
+                <div class="drugaKolona">
+                    <input type="number" id="ab" name="idKorisnik" placeholder="ID">
+                </div>
+            </div>
+            <div class="red">
+                <div class="prvaKolona">
+                    <label for="ac">Last name:</label>
+                </div>
+                <div class="drugaKolona">
+                    <input type="text" id="ac" name="prezimeKorisnika" placeholder="Last name">
+                </div>
+            </div>
+            <div class="red">
+                <div class="prvaKolona">
+                    <label for="ad">First name:</label>
+                </div>
+                <div class="drugaKolona">
+                    <input type="text" id="ad" name="imeKorisnika" placeholder="First name">                    
+                </div>
+            </div>
+            <div class="red">
+                <input type="submit" value="Query database">
+            </div>                                
+        </form><br>
+    </div>
+    
+
+
+    <h2>Admission for resetting times and number of tasks:</h2><br>
+
+    <div class="container1">
+        <form action="/resetujVremena" id="cetvrtaFroma">
+            <div class="red">
+                <div class="prvaKolona">
+                    <label for="ag">Password:</label>
+                </div>
+                <div class="drugaKolona">
+                    <input type="password" id="ag" name="sifraa" placeholder="Password">
+                </div>
+            </div>
+            <div class="red">
+                <input type="submit" name="" value="Submit">
+            </div>                
+        </form>
+    </div>
+    
+</body>
+</html>

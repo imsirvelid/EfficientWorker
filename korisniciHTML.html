@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Workers enrolled</title>
+
+    <style>
+        body {
+            background-color: teal;
+            font-weight: bolder;
+        }
+
+        h2 {
+            text-align: center;
+            color: whitesmoke;
+        }
+
+        #tabela {
+            font-weight: bolder;
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 80%;
+            margin-left: 10%;
+            margin-right: 10%;
+        }
+
+        #tabela td, #tabela th {
+            font-weight: bolder;
+            border:1px solid #ddd;
+            padding: 8px;
+        }
+
+        #tabela tr {
+            background-color: white;
+            color: black;
+        }        
+
+        #tabela tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #tabela tr:hover {
+            background-color: #ddd;
+        }
+
+        #tabela th {
+            padding-top:12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #4CAF50;
+            color: whitesmoke;            
+        }
+
+    </style>
+</head>
+<body>
+    <h2 id="odgovor">ovo je trenutno stanje</h2>
+
+    <table id="tabela" border="2px solid red">
+        <tr>
+            <th>Worker ID</th>
+            <th>Last name</th>
+            <th>First name</th>
+            <th>Status</th>
+            <th>Time spent solving tasks</th>
+            <th>Number of tasks solved</th>
+        </tr>
+        <tbody>
+        </tbody>
+    </table>
+
+    <script>
+        let tabela = document.getElementById("tabela");
+        let webSocketURL = "ws://" + window.location.host + "/ws";
+        let webSocket = new WebSocket(webSocketURL);
+        let odgovor = document.getElementById("odgovor");
+
+        webSocket.onopen = function() {
+            webSocket.send("korisnici");
+        }
+
+        webSocket.onmessage = function(poruka) {
+            if (poruka.data == "obrisana vremena") {
+                odgovor.innerHTML = "Worker times and tasks have been deleted...";
+                tabela.innerHTML = "";
+            } else {
+                odgovor.innerHTML = "Results have been refreshed:";
+                let zapis = poruka.data.split("|");
+                dodajUTabelu(zapis);
+            }
+        }
+
+        function dodajUTabelu(hodžinZapis) {
+            let red = tabela.insertRow(1);
+            let i = red.insertCell(-1);
+            let pre = red.insertCell(-1);
+            let im = red.insertCell(-1);
+            let aktiv = red.insertCell(-1);
+            let vrij = red.insertCell(-1);
+            let broj = red.insertCell(-1);
+
+            i.innerHTML = hodžinZapis[0];
+            pre.innerHTML = hodžinZapis[1];
+            im.innerHTML = hodžinZapis[2]; 
+            aktiv.innerHTML = hodžinZapis[3];// string aktivan, ili neaktivan..., sve ovo sa serverske strane urediti.
+            vrij.innerHTML = hodžinZapis[4]; // u obliku dani:sati:minute, vec napravljeni.
+            broj.innerHTML = hodžinZapis[5];
+        }
+    </script>
+</body>
+</html>

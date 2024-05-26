@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Historija prisutstva radnika</title>
+
+    <style>
+        body {
+            background-color: teal;
+            font-weight: bolder;
+        }
+
+        h2 {
+            text-align: center;
+            color: whitesmoke;
+        }
+
+        #mojaTabela {
+            font-weight: bolder;
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 80%;
+            margin-left: 10%;
+            margin-right: 10%;
+        }        
+
+        #mojaTabela td, #mojaTabela th {
+            font-weight: bolder;
+            border:1px solid #ddd;
+            padding: 8px;
+        }
+        #mojaTabela tr {
+            background-color: white;
+            color: black;
+        }
+
+        #mojaTabela tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #mojaTabela tr:hover {
+            background-color: #ddd;
+        }
+
+        #mojaTabela th {
+            padding-top:12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #4CAF50;
+            color: whitesmoke;            
+        }
+    </style>
+</head>
+<body>
+    <h2 id="odgovor">ovo je text u datom paragrafu...</h2>
+
+    <table id="mojaTabela" border="2px solid black">
+        <tr>
+                <th>ID radnika</th>
+                <th>Prezime</th>
+                <th>Ime</th>
+                <th>Datum dolaska</th>
+                <th>Vrijeme dolaska</th>
+                <th>Datum odlaska</th>
+                <th>Vrijeme odlaska</th>
+        </tr>
+        <tbody>
+        </tbody>
+
+    </table>
+    <script>
+        let tabela = document.getElementById("mojaTabela");
+        let webSocketURL = "ws://" + window.location.host + "/ws";
+        let webSocket = new WebSocket(webSocketURL);
+        let odgovor = document.getElementById("odgovor");
+        console.log(webSocketURL);
+        
+        webSocket.onopen = function() {
+            webSocket.send("zapisi");
+        };
+
+        webSocket.onmessage = function(poruka) {
+            if (poruka.data == "obrisani zapisi") {
+                odgovor.innerHTML = "Zapisi su obrisani";
+                tabela.innerHTML = "";
+            } else {
+                odgovor.innerHTML = "Rezultati su osvježeni";
+                let zapis = poruka.data.split("|");
+                dodajUTabelu(zapis);
+            }
+        };
+
+
+        function dodajUTabelu(hodzinZapis) {
+            let red = tabela.insertRow(1);
+            let i = red.insertCell(-1);
+            let pre = red.insertCell(-1);
+            let im = red.insertCell(-1);
+            let datumUl = red.insertCell(-1);
+            let vrijemeUl = red.insertCell(-1);
+            let datumIz = red.insertCell(-1);
+            let vrijemeIz = red.insertCell(-1);
+
+            i.innerHTML = hodzinZapis[0];
+            pre.innerHTML = hodzinZapis[1];
+            im.innerHTML = hodzinZapis[2];
+            datumUl.innerHTML = hodzinZapis[3];
+            vrijemeUl.innerHTML = hodzinZapis[4];
+            datumIz.innerHTML = hodzinZapis[5];
+            vrijemeIz.innerHTML = hodzinZapis[6];
+        }
+    </script>
+</body>
+</html>
